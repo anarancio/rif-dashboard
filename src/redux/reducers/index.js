@@ -1,7 +1,6 @@
 import { combineReducers } from "redux";
-import dataReducer from "src/redux/reducers/dataReducer";
-import sidebarReducer from 'src/redux/reducers/sidebarReducer';
+import dataReducer from "./dataReducer";
 
-const rootReducer = combineReducers({ dataReducer, sidebarReducer });
+const rootReducer = combineReducers({ dataReducer });
 
 export default rootReducer;

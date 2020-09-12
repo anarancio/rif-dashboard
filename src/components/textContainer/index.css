@@ -1,0 +1,7 @@
+.textArea {
+    overflow: scroll;
+    margin: 1rem;
+    max-width: 75%;
+    max-height: 15rem;
+    background-color: lightgray;
+}

@@ -1,5 +1,5 @@
-import api from "src/api";
-import { SET_DATA } from "src/redux/actions/types";
+import api from "../../api";
+import { SET_DATA } from "../actions/types";
 
 export const getData = () => async (dispatch) => {
   const fullUrl =
@@ -7,12 +7,9 @@ export const getData = () => async (dispatch) => {
   try {
     const res = await api.get(fullUrl);
     const { data } = res;
-    return dispatch({ type: SET_DATA, payload: { data: JSON.stringify(data) } });
+    dispatch({ type: SET_DATA, payload: { data: JSON.stringify(data) } });
   } catch (error) {
     console.error(error);
-    return dispatch({
-      type: SET_DATA,
-      payload: { data: 'Error when fetching' },
-    });
+    dispatch({ type: SET_DATA, payload: { data: "Error when fetching" } });
   }
 };
