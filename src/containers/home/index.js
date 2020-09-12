@@ -20,11 +20,17 @@ const Home = (props) => {
             <GithubWidget />
           </Col>
           <Col>
+            
           </Col>
         </Row>
         <Row>
           <Col>
             <ProjectStatusWidget />
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+          
           </Col>
         </Row>
       </Container>
