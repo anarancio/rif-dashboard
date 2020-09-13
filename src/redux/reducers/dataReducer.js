@@ -1,4 +1,4 @@
-import { SET_DATA, SET_GITHUB_METRICS } from "../actions/types";
+import { SET_DATA, SET_GITHUB_METRICS, TOGGLE_GITHUB_DETAILS } from "../actions/types";
 
 const initialState = {
   data: "No data",
@@ -6,6 +6,26 @@ const initialState = {
     stars: 200,
     forks: 10,
     watchers: 100,
+    data: [
+      {
+        id: 'marketplace',
+        stars: 10,
+        watchers: 5,
+        forks: 6,
+      },
+      {
+        id: 'payments',
+        stars: 100,
+        watchers: 45,
+        forks: 3,
+      },
+      {
+        id: 'comms',
+        stars: 90,
+        watchers: 50,
+        forks: 1,
+      }
+    ],
   }
 };
 

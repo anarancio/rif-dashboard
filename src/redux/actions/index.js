@@ -1,5 +1,5 @@
 import api from "../../api";
-import { SET_DATA } from "../actions/types";
+import { SET_DATA, TOGGLE_GITHUB_DETAILS } from "../actions/types";
 
 export const getData = () => async (dispatch) => {
   const fullUrl =

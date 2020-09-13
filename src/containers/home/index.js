@@ -8,7 +8,7 @@ import GithubWidget from "../../components/widgets/GithubWidget"
 import ProjectStatusWidget from "../../components/widgets/ProjectStatusWidget"
 
 const Home = (props) => {
-  const { data, getDataAction } = props;
+  const { data, getDataAction, githubData } = props;
 
   const onClick = () => getDataAction();
 
@@ -43,6 +43,7 @@ const Home = (props) => {
 
 const mapStateToProps = ({ dataReducer }) => ({
   data: dataReducer.data,
+  githubData: dataReducer.github,
 });
 
 const mapDispatchToProps = (dispatch) => ({
