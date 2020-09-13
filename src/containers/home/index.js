@@ -15,7 +15,7 @@ const Home = (props) => {
   return (
     <div className="homeContainer">
       <Container>
-        <Row>
+        <Row style={{marginTop: "10px"}}>
           <Col>
             <GithubWidget />
           </Col>
@@ -23,7 +23,7 @@ const Home = (props) => {
             
           </Col>
         </Row>
-        <Row>
+        <Row style={{marginTop: "10px"}}>
           <Col>
             <ProjectStatusWidget />
           </Col>

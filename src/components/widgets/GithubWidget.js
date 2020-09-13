@@ -33,7 +33,7 @@ const GithubWidget = (props) => {
     return (
         <div>
             <Card onClick={handleShow}>
-                <Card.Header>Github Metrics</Card.Header>
+                <Card.Header style={{backgroundColor: "#133b5c", color: "white"}}>Github Metrics</Card.Header>
                 <Card.Body>
                 <Card.Text>
                     <FontAwesomeIcon icon={faStar} /> {githubData.stars} <span style={{width: "10px", marginLeft: "10px", marginRight: "10px"}}></span>

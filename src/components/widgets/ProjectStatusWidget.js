@@ -41,7 +41,7 @@ const ProjectStatusWidget = (props) => {
             <Card>
                 <Card.Body>
                 <Table striped bordered hover size="sm">
-                    <thead>
+                    <thead style={{backgroundColor: "#133b5c", color: "white"}}>
                         <tr>
                             <th style={{textAlign: "center"}}>Project</th>
                             <th style={{textAlign: "center"}}>TestNet/Staging</th>
