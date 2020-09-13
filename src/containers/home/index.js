@@ -8,7 +8,7 @@ import GithubWidget from "../../components/widgets/GithubWidget"
 import ProjectStatusWidget from "../../components/widgets/ProjectStatusWidget"
 
 const Home = (props) => {
-  const { data, getDataAction, githubData } = props;
+  const { data, getDataAction } = props;
 
   const onClick = () => getDataAction();
 

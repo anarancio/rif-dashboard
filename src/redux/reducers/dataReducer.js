@@ -26,7 +26,27 @@ const initialState = {
         forks: 1,
       }
     ],
-  }
+  },
+  projects: [
+    {
+      name: 'Marketplace - RNS',
+      status: "On Track",
+      testnet: true,
+      mainnet: false,
+    },
+    {
+      name: 'Marketplace - Pinning',
+      status: "On Track",
+      testnet: false,
+      mainnet: false,
+    },
+    {
+      name: 'Lumino - Transport layer refactor',
+      status: "In Design",
+      testnet: false,
+      mainnet: false,
+    }
+  ]
 };
 
 const dataReducer = (state = initialState, action) => {
