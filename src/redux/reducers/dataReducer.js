@@ -33,18 +33,49 @@ const initialState = {
       status: "On Track",
       testnet: true,
       mainnet: false,
+      events: [
+        {
+          date: '02/01/2020',
+          text: 'event 1',
+          deliveryDate: '10/05/2020'
+        },{
+          date: '02/01/2020',
+          text: 'event 2',
+          deliveryDate: '10/05/2020'
+        },{
+          date: '02/01/2020',
+          text: 'event 3',
+          deliveryDate: '10/05/2020'
+        },{
+          date: '02/01/2020',
+          text: 'event 4',
+          deliveryDate: '10/05/2020'
+        }
+      ]
     },
     {
       name: 'Marketplace - Pinning',
       status: "On Track",
       testnet: false,
       mainnet: false,
+      events: [
+        {
+          date: '02/01/2020',
+          text: 'event 11',
+          deliveryDate: '10/05/2020'
+        },{
+          date: '02/01/2020',
+          text: 'event 12',
+          deliveryDate: '10/05/2020'
+        }
+      ]
     },
     {
       name: 'Lumino - Transport layer refactor',
       status: "In Design",
       testnet: false,
       mainnet: false,
+      events: []
     }
   ]
 };

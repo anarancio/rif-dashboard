@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Card, Table } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheckCircle, faTimesCircle, faTrafficLight } from '@fortawesome/free-solid-svg-icons'
+import CustomDialog from '../utils/CustomDialog'
 
 const ProjectStatusWidget = (props) => {
+    const [show, setShow] = useState(false);
+    const [dialogTitle, setDialogTitle] = useState(false);
+    const [dialogData, setDialogData] = useState([]);
 
     const { projectData } = props;
 
@@ -30,9 +34,12 @@ const ProjectStatusWidget = (props) => {
         return <FontAwesomeIcon icon={faTrafficLight} style={{color: color}} />;
     };
 
+    const handleClose = () => setShow(false);
+
     return (
-        <Card>
-              <Card.Body>
+        <div>
+            <Card>
+                <Card.Body>
                 <Table striped bordered hover size="sm">
                     <thead>
                         <tr>
@@ -47,23 +54,49 @@ const ProjectStatusWidget = (props) => {
                             const testNet = (project.testnet?<FontAwesomeIcon icon={faCheckCircle} style={{color: "green"}} />:<FontAwesomeIcon icon={faTimesCircle} style={{color: "red"}} />)
                             const mainNet = (project.mainnet?<FontAwesomeIcon icon={faCheckCircle} style={{color: "green"}} />:<FontAwesomeIcon icon={faTimesCircle} style={{color: "red"}} />)
                             return <tr key={project.name}>
-                                        <td>{status} {project.name}</td>
+                                        <td onClick={() => {
+                                            setDialogTitle(project.name + ' events');
+                                            setDialogData(project.events);
+                                            setShow(true);
+                                        }}>{status} {project.name}</td>
                                         <td style={{textAlign: "center"}}>{testNet}</td>
                                         <td style={{textAlign: "center"}}>{mainNet}</td>
                                     </tr>
                         })}
                     </tbody>
                 </Table>
-              </Card.Body>
-              <Card.Footer>
-                <FontAwesomeIcon icon={faTrafficLight} style={{color: "green", marginRight: "5px", marginLeft: "5px"}} />On Track
-                <FontAwesomeIcon icon={faTrafficLight} style={{color: "red", marginRight: "5px", marginLeft: "5px"}} />Delayed
-                <FontAwesomeIcon icon={faTrafficLight} style={{color: "#FFB627", marginRight: "5px", marginLeft: "5px"}} />Suspended
-                <FontAwesomeIcon icon={faTrafficLight} style={{color: "purple", marginRight: "5px", marginLeft: "5px"}} />In design
-                <FontAwesomeIcon icon={faTrafficLight} style={{color: "blue", marginRight: "5px", marginLeft: "5px"}} />delivered
-                <FontAwesomeIcon icon={faTrafficLight} style={{color: "gray", marginRight: "5px", marginLeft: "5px"}} />Not Started
-              </Card.Footer>
+                </Card.Body>
+                <Card.Footer>
+                    <FontAwesomeIcon icon={faTrafficLight} style={{color: "green", marginRight: "5px", marginLeft: "5px"}} />On Track
+                    <FontAwesomeIcon icon={faTrafficLight} style={{color: "red", marginRight: "5px", marginLeft: "5px"}} />Delayed
+                    <FontAwesomeIcon icon={faTrafficLight} style={{color: "#FFB627", marginRight: "5px", marginLeft: "5px"}} />Suspended
+                    <FontAwesomeIcon icon={faTrafficLight} style={{color: "purple", marginRight: "5px", marginLeft: "5px"}} />In design
+                    <FontAwesomeIcon icon={faTrafficLight} style={{color: "blue", marginRight: "5px", marginLeft: "5px"}} />delivered
+                    <FontAwesomeIcon icon={faTrafficLight} style={{color: "gray", marginRight: "5px", marginLeft: "5px"}} />Not Started
+                </Card.Footer>
             </Card>
+            <CustomDialog showDialog={show} title={dialogTitle} closeAction={handleClose}>
+                <Table striped bordered hover size="sm">
+                    <thead>
+                        <tr>
+                            <th style={{textAlign: "center"}}>Date</th>
+                            <th style={{textAlign: "center"}}>Event</th>
+                            <th style={{textAlign: "center"}}>Delivery Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {dialogData.map((data, idx) => {
+                            const key = data.date + '-' + idx;
+                            return <tr key={key}>
+                                        <td style={{textAlign: "center"}}>{data.date}</td>
+                                        <td>{data.text}</td>
+                                        <td style={{textAlign: "center"}}>{data.deliveryDate}</td>
+                                    </tr>
+                        })}
+                    </tbody>
+                </Table>
+            </CustomDialog>
+        </div>
     );
 };
 

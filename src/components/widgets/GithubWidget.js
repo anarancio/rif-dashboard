@@ -4,7 +4,7 @@ import { Card, Table, Tabs, Tab } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar, faGlasses, faCodeBranch } from '@fortawesome/free-solid-svg-icons'
 import CustomDialog from '../utils/CustomDialog'
-import { PieChart, Pie, Sector, Legend, Tooltip, Cell } from 'recharts';
+import { PieChart, Pie, Legend, Tooltip, Cell } from 'recharts';
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 const RADIAN = Math.PI / 180;
