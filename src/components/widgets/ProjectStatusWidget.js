@@ -79,18 +79,19 @@ const ProjectStatusWidget = (props) => {
                 <Table striped bordered hover size="sm">
                     <thead>
                         <tr>
-                            <th style={{textAlign: "center"}}>Date</th>
-                            <th style={{textAlign: "center"}}>Event</th>
-                            <th style={{textAlign: "center"}}>Delivery Date</th>
+                            <th style={{textAlign: "center", width: "70%"}}>Event</th>
+                            <th style={{textAlign: "center"}}>Dates</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody style={{fontSize: "small"}}>
                         {dialogData.map((data, idx) => {
                             const key = data.date + '-' + idx;
                             return <tr key={key}>
-                                        <td style={{textAlign: "center"}}>{data.date}</td>
                                         <td>{data.text}</td>
-                                        <td style={{textAlign: "center"}}>{data.deliveryDate}</td>
+                                        <td style={{fontSize: "xx-small"}}>
+                                            <b>Date:</b> {data.date}<br />
+                                            <b>Delivery date:</b> {data.deliveryDate}
+                                        </td>
                                     </tr>
                         })}
                     </tbody>
