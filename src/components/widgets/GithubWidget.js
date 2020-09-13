@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { Card, Table } from 'react-bootstrap';
+import { Card, Table, Tabs, Tab } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar, faGlasses, faCodeBranch } from '@fortawesome/free-solid-svg-icons'
 import CustomDialog from '../utils/CustomDialog'
@@ -30,15 +30,6 @@ const GithubWidget = (props) => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    let data = [
-        { name: 'Group A', value: 400 },
-        { name: 'Group B', value: 300 },
-        { name: 'Group C', value: 300 },
-        { name: 'Group D', value: 200 },
-        { name: 'Group E', value: 278 },
-        { name: 'Group F', value: 189 },
-      ];
-
     return (
         <div>
             <Card onClick={handleShow}>
@@ -53,14 +44,41 @@ const GithubWidget = (props) => {
             </Card>
             <CustomDialog showDialog={show} title={"Github Details"} closeAction={handleClose}>
                 <div>
-                    <PieChart width={460} height={460}>
-                        <Pie dataKey="value" isAnimationActive={false} data={data} cx={230} cy={180} outerRadius={120} fill="#ff7300" labelLine={false} label>
-                            {
-                                data.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)
-                            }
-                        </Pie>
-                        <Legend />
-                    </PieChart>
+                <Tabs defaultActiveKey="stars" id="github-chart-selector">
+                    <Tab eventKey="stars" title="Stars">
+                        <PieChart width={400} height={300}>
+                            <Pie dataKey="stars" nameKey="id" isAnimationActive={false} data={githubData.data} cx={230} cy={130} outerRadius={80} fill="#ff7300" labelLine={false} label>
+                                {
+                                    githubData.data.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)
+                                }
+                            </Pie>
+                            <Legend />
+                            <Tooltip />
+                        </PieChart>
+                    </Tab>
+                    <Tab eventKey="watchers" title="Watchers">
+                        <PieChart width={400} height={300}>
+                            <Pie dataKey="watchers" nameKey="id" isAnimationActive={false} data={githubData.data} cx={230} cy={130} outerRadius={80} fill="#ff7300" labelLine={false} label>
+                                {
+                                    githubData.data.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)
+                                }
+                            </Pie>
+                            <Legend />
+                            <Tooltip />
+                        </PieChart>
+                    </Tab>
+                    <Tab eventKey="forks" title="Forks">
+                        <PieChart width={400} height={300}>
+                            <Pie dataKey="forks" nameKey="id" isAnimationActive={false} data={githubData.data} cx={230} cy={130} outerRadius={80} fill="#ff7300" labelLine={false} label>
+                                {
+                                    githubData.data.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)
+                                }
+                            </Pie>
+                            <Legend />
+                            <Tooltip />
+                        </PieChart>
+                    </Tab>
+                </Tabs>
                     <Table striped bordered hover size="sm">
                         <thead>
                             <tr>
