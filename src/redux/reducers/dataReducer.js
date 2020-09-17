@@ -1,4 +1,9 @@
-import { SET_DATA, SET_GITHUB_METRICS, TOGGLE_GITHUB_DETAILS } from "../actions/types";
+import { 
+  SET_DATA, 
+  SET_GITHUB_METRICS, 
+  TOGGLE_GITHUB_DETAILS,
+  SET_PROJECT_DATA 
+} from "../actions/types";
 
 const initialState = {
   data: "No data",
@@ -13,63 +18,46 @@ const initialState = {
       forks: [],
     }
   },
-  projects: [
-    {
-      name: 'Marketplace - RNS',
-      status: "On Track",
-      testnet: true,
-      mainnet: false,
-      events: [
-        {
-          date: '02/01/2020',
-          text: 'event 1',
-          deliveryDate: '10/05/2020'
-        },{
-          date: '02/01/2020',
-          text: 'event 2',
-          deliveryDate: '10/05/2020'
-        },{
-          date: '02/01/2020',
-          text: 'event 3',
-          deliveryDate: '10/05/2020'
-        },{
-          date: '02/01/2020',
-          text: 'event 4',
-          deliveryDate: '10/05/2020'
-        }
-      ]
-    },
-    {
-      name: 'Marketplace - Pinning',
-      status: "On Track",
-      testnet: false,
-      mainnet: false,
-      events: [
-        {
-          date: '02/01/2020',
-          text: 'event 11',
-          deliveryDate: '10/05/2020'
-        },{
-          date: '02/01/2020',
-          text: 'event 12',
-          deliveryDate: '10/05/2020'
-        }
-      ]
-    },
-    {
-      name: 'Lumino - Transport layer refactor',
-      status: "In Design",
-      testnet: false,
-      mainnet: false,
-      events: []
-    }
-  ]
+  projects: []
 };
 
 const dataReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_DATA: {
       return { ...state, data: action.payload.data };
+    }
+    case SET_PROJECT_DATA: {
+      console.log("SET_PROJECT_DATA");
+      const json = JSON.parse(action.payload.data);
+      const entries = json.feed.entry;
+
+      let projectsData = [];
+      let pos = 5; // we start in entry 5 because until 4 is the header of the spreadsheet
+      
+      while (pos < entries.length) {
+        const categoryValue = entries[pos].content['$t'];
+        pos++;
+        const projectValue = entries[pos].content['$t'];
+        pos++;
+        const statusValue = entries[pos].content['$t'];
+        pos++;
+        const testnetValue = entries[pos].content['$t'];
+        pos++;
+        const mainnetValue = entries[pos].content['$t'];
+        pos++;
+
+        const entry = {
+          category: categoryValue,
+          name: projectValue,
+          status: statusValue,
+          testnet: testnetValue,
+          mainnet: mainnetValue,
+          events: [],
+        };
+        projectsData.push(entry);
+      }
+
+      return { ...state, projects: projectsData }
     }
     case SET_GITHUB_METRICS: {
       const data = action.payload.data.data;

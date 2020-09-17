@@ -1,16 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Card, Table } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheckCircle, faTimesCircle, faTrafficLight } from '@fortawesome/free-solid-svg-icons'
 import CustomDialog from '../utils/CustomDialog'
+import { getProjectData } from "../../redux/actions";
 
 const ProjectStatusWidget = (props) => {
     const [show, setShow] = useState(false);
     const [dialogTitle, setDialogTitle] = useState(false);
     const [dialogData, setDialogData] = useState([]);
 
-    const { projectData } = props;
+    const { projectData, getProjectDataAction } = props;
+
+    useEffect(() => {
+        getProjectDataAction();
+    }, []);
 
     const getStatusLight = (_status) => {
         let color = "gray";
@@ -36,6 +41,17 @@ const ProjectStatusWidget = (props) => {
 
     const handleClose = () => setShow(false);
 
+    const returnEnvIcon = (envStatus) => {
+        const status = envStatus.toLowerCase();
+        if(status == 'yes') {
+            return <FontAwesomeIcon icon={faCheckCircle} style={{color: "green"}} />;
+        } else if (status == 'no') {
+            return <FontAwesomeIcon icon={faTimesCircle} style={{color: "red"}} />;
+        } else {
+            return <span>Not Applicable</span>;
+        }
+    }
+
     return (
         <div>
             <Card>
@@ -43,6 +59,7 @@ const ProjectStatusWidget = (props) => {
                 <Table striped bordered hover size="sm">
                     <thead style={{backgroundColor: "#133b5c", color: "white"}}>
                         <tr>
+                            <th style={{textAlign: "center"}}>Service</th>
                             <th style={{textAlign: "center"}}>Project</th>
                             <th style={{textAlign: "center"}}>TestNet/Staging</th>
                             <th style={{textAlign: "center"}}>MainNet/Production</th>
@@ -50,10 +67,12 @@ const ProjectStatusWidget = (props) => {
                     </thead>
                     <tbody>
                         {projectData.map((project) => {
+                            const key = project.category + '-' + project.name;
                             const status = getStatusLight(project.status);
-                            const testNet = (project.testnet?<FontAwesomeIcon icon={faCheckCircle} style={{color: "green"}} />:<FontAwesomeIcon icon={faTimesCircle} style={{color: "red"}} />)
-                            const mainNet = (project.mainnet?<FontAwesomeIcon icon={faCheckCircle} style={{color: "green"}} />:<FontAwesomeIcon icon={faTimesCircle} style={{color: "red"}} />)
-                            return <tr key={project.name}>
+                            const testNet = returnEnvIcon(project.testnet);
+                            const mainNet = returnEnvIcon(project.mainnet);
+                            return <tr key={key}>
+                                        <td style={{textAlign: "center"}}>{project.category}</td>
                                         <td onClick={() => {
                                             setDialogTitle(project.name + ' events');
                                             setDialogData(project.events);
@@ -106,6 +125,7 @@ const mapStateToProps = ({ dataReducer }) => ({
 });
   
 const mapDispatchToProps = (dispatch) => ({
+    getProjectDataAction: () => dispatch(getProjectData()),
 });
   
 export default connect(mapStateToProps, mapDispatchToProps)(ProjectStatusWidget);

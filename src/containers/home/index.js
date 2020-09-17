@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getData } from "../../redux/actions";
+import { getProjectData } from "../../redux/actions";
 import TextContainer from "../../components/textContainer";
 import "./index.css";
 import { Container, Row, Col, Card, Table } from 'react-bootstrap';
@@ -47,7 +47,7 @@ const mapStateToProps = ({ dataReducer }) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getDataAction: () => dispatch(getData()),
+  getDataAction: () => dispatch(getProjectData()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
