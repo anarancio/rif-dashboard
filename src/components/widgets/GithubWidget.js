@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Card, Table, Tabs, Tab } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStar, faGlasses, faCodeBranch } from '@fortawesome/free-solid-svg-icons'
 import CustomDialog from '../utils/CustomDialog'
 import { PieChart, Pie, Legend, Tooltip, Cell } from 'recharts';
+import { getGithubSummary } from "../../redux/actions";
 
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 const RADIAN = Math.PI / 180;
@@ -25,7 +26,11 @@ const renderCustomizedLabel = ({
 const GithubWidget = (props) => {
     const [show, setShow] = useState(false);
 
-    const { githubData } = props;
+    const { githubData, getGithubSummaryAction } = props;
+
+    useEffect(() => {
+        getGithubSummaryAction();
+    }, []);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -47,7 +52,7 @@ const GithubWidget = (props) => {
                 <Tabs defaultActiveKey="stars" id="github-chart-selector">
                     <Tab eventKey="stars" title="Stars">
                         <PieChart width={400} height={300}>
-                            <Pie dataKey="stars" nameKey="id" isAnimationActive={false} data={githubData.data} cx={230} cy={130} outerRadius={80} fill="#ff7300" labelLine={false} label>
+                            <Pie dataKey="value" nameKey="category" isAnimationActive={false} data={githubData.dataByAttrs.stars} cx={230} cy={130} outerRadius={80} fill="#ff7300" labelLine={false} label>
                                 {
                                     githubData.data.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)
                                 }
@@ -58,7 +63,7 @@ const GithubWidget = (props) => {
                     </Tab>
                     <Tab eventKey="watchers" title="Watchers">
                         <PieChart width={400} height={300}>
-                            <Pie dataKey="watchers" nameKey="id" isAnimationActive={false} data={githubData.data} cx={230} cy={130} outerRadius={80} fill="#ff7300" labelLine={false} label>
+                            <Pie dataKey="value" nameKey="category" isAnimationActive={false} data={githubData.dataByAttrs.watchers} cx={230} cy={130} outerRadius={80} fill="#ff7300" labelLine={false} label>
                                 {
                                     githubData.data.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)
                                 }
@@ -69,7 +74,7 @@ const GithubWidget = (props) => {
                     </Tab>
                     <Tab eventKey="forks" title="Forks">
                         <PieChart width={400} height={300}>
-                            <Pie dataKey="forks" nameKey="id" isAnimationActive={false} data={githubData.data} cx={230} cy={130} outerRadius={80} fill="#ff7300" labelLine={false} label>
+                            <Pie dataKey="value" nameKey="category" isAnimationActive={false} data={githubData.dataByAttrs.forks} cx={230} cy={130} outerRadius={80} fill="#ff7300" labelLine={false} label>
                                 {
                                     githubData.data.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />)
                                 }
@@ -110,6 +115,7 @@ const mapStateToProps = ({ dataReducer }) => ({
 });
   
 const mapDispatchToProps = (dispatch) => ({
+    getGithubSummaryAction: () => dispatch(getGithubSummary()),
 });
   
 export default connect(mapStateToProps, mapDispatchToProps)(GithubWidget);
