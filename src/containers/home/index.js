@@ -6,6 +6,7 @@ import "./index.css";
 import { Container, Row, Col, Card, Table } from 'react-bootstrap';
 import GithubWidget from "../../components/widgets/GithubWidget"
 import ProjectStatusWidget from "../../components/widgets/ProjectStatusWidget"
+import OkrsWidget from "../../components/widgets/OkrsWidget"
 
 const Home = (props) => {
   const { data, getDataAction } = props;
@@ -20,7 +21,7 @@ const Home = (props) => {
             <GithubWidget />
           </Col>
           <Col>
-            
+            <OkrsWidget />
           </Col>
         </Row>
         <Row style={{marginTop: "10px"}}>
