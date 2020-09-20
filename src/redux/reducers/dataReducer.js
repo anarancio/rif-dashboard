@@ -2,7 +2,8 @@ import {
   SET_DATA, 
   SET_GITHUB_METRICS, 
   TOGGLE_GITHUB_DETAILS,
-  SET_PROJECT_DATA 
+  SET_PROJECT_DATA,
+  SET_OKRS
 } from "../actions/types";
 
 const initialState = {
@@ -18,6 +19,15 @@ const initialState = {
       forks: [],
     }
   },
+  okrs: {
+    rifPrice: 0,
+    staking: {
+      rdoc: 0,
+      total: 0,
+      totalUsd: 0,
+      percentage: 0,
+    }
+  },
   projects: []
 };
 
@@ -26,8 +36,21 @@ const dataReducer = (state = initialState, action) => {
     case SET_DATA: {
       return { ...state, data: action.payload.data };
     }
+    case SET_OKRS: {
+      console.log("SET_OKRS");
+      const data = action.payload.data.data;
+      const okrValue = {
+        rifPrice: data.rifPrice,
+        staking: {
+          rdoc: data.rdoc,
+          total: data.rdoc,
+          totalUsd: data.rdoc * data.rifPrice,
+          percentage: (((data.rdoc * data.rifPrice) * 100) / 13000000),
+        }
+      };
+      return { ...state, okrs: okrValue };
+    }
     case SET_PROJECT_DATA: {
-      console.log("SET_PROJECT_DATA");
       const json = JSON.parse(action.payload.data);
       const entries = json.feed.entry;
 
