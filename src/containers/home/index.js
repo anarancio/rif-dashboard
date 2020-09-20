@@ -1,7 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
 import { getProjectData } from "../../redux/actions";
-import TextContainer from "../../components/textContainer";
 import "./index.css";
 import { Container, Row, Col, Card, Table } from 'react-bootstrap';
 import GithubWidget from "../../components/widgets/GithubWidget"
@@ -35,9 +34,6 @@ const Home = (props) => {
           </Col>
         </Row>
       </Container>
-      <h2>Home</h2>
-      <TextContainer text={data} />
-      <button onClick={onClick}>Fetch data</button>
     </div>
   );
 };
