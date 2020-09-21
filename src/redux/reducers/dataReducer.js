@@ -31,6 +31,16 @@ const initialState = {
   projects: []
 };
 
+const compareProjects = (project1, project2) => {
+  if(project1.priority == project2.priority) {
+    return 0;
+  } if (project1.priority < project2.priority) {
+    return -1;
+  } else {
+    return 1;
+  }
+}
+
 const dataReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_DATA: {
@@ -69,18 +79,34 @@ const dataReducer = (state = initialState, action) => {
         const mainnetValue = entries[pos].content['$t'];
         pos++;
 
+        let priorityValue = 100;
+        if (statusValue.toLowerCase() == 'on track') {
+          priorityValue = 1;
+        } else if (statusValue.toLowerCase() == 'delayed') {
+          priorityValue = 0;
+        } else if (statusValue.toLowerCase() == 'in design') {
+          priorityValue = 2;
+        } else if (statusValue.toLowerCase() == 'not started') {
+          priorityValue = 3;
+        } else if (statusValue.toLowerCase() == 'delivered') {
+          priorityValue = 4;
+        } else if (statusValue.toLowerCase() == 'suspended') {
+          priorityValue = 5;
+        }
+
         const entry = {
           category: categoryValue,
           name: projectValue,
           status: statusValue,
           testnet: testnetValue,
           mainnet: mainnetValue,
+          priority: priorityValue,
           events: [],
         };
         projectsData.push(entry);
       }
 
-      return { ...state, projects: projectsData }
+      return { ...state, projects: projectsData.sort(compareProjects) }
     }
     case SET_GITHUB_METRICS: {
       const data = action.payload.data.data;
